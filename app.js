@@ -20,14 +20,46 @@ function saveTask(event){
         descripcion:descripcionTarea
     }
 
-    //console.log(`titulo: ${titleTarea}, descripción: ${descripcionTarea}`);
-   
+    if(localStorage.getItem('tareas')===null){
+        let tareas=[];
+        tareas.push(Tarea);
+        localStorage.setItem('tareas',JSON.stringify(tareas));
+    }
+    else{
+        let tareas=JSON.parse(localStorage.getItem('tareas'));
+        tareas.push(Tarea);
+        localStorage.setItem('tareas',JSON.stringify(tareas));
+    }
+
+    //console.log(Tarea);
+    //localStorage.setItem('tareas',JSON.stringify(Tarea));//como voy a llamar ese parametro, y el valor
+    //console.log(JSON.parse(localStorage.getItem('tareas')));
+    
     event.preventDefault();//previene el comportamiento por defecto, y 
     //evita que se recargue la página
 }
 
 
+//local storage, permite almacenar información dentro del navegador
 
+function getTasks(){
+    let tareas=JSON.parse(localStorage.getItem('tareas'));
+    let tasksviews=document.getElementById('tasks');
+    tasksviews.innerHTML='';//limpiamos
+    for(tarea of tareas){
+        tasksviews.innerHTML+=`
+        <div class="card mb-4">
+            <div class="card-body">
+                <p>${tarea.titulo}</p>
+                <p>${tarea.descripcion} </p>
+                <a href="" class="btn btn-danger">Eliminar</a>
+            </div>
+        </div>`
+    }
+    
+}
+
+getTasks();
 
 
 
