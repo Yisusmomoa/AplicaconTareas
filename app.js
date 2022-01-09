@@ -24,13 +24,14 @@ function saveTask(event){
         let tareas=[];
         tareas.push(Tarea);
         localStorage.setItem('tareas',JSON.stringify(tareas));
+        
     }
     else{
         let tareas=JSON.parse(localStorage.getItem('tareas'));
         tareas.push(Tarea);
         localStorage.setItem('tareas',JSON.stringify(tareas));
     }
-
+    getTasks();
     //console.log(Tarea);
     //localStorage.setItem('tareas',JSON.stringify(Tarea));//como voy a llamar ese parametro, y el valor
     //console.log(JSON.parse(localStorage.getItem('tareas')));
@@ -52,16 +53,25 @@ function getTasks(){
             <div class="card-body">
                 <p>${tarea.titulo}</p>
                 <p>${tarea.descripcion} </p>
-                <a href="" class="btn btn-danger">Eliminar</a>
+                <a onclick="deleteTasks('${tarea.titulo}')" class="btn btn-danger">Eliminar</a>
             </div>
         </div>`
     }
-    
 }
-
 getTasks();
 
 
+function deleteTasks(ptitulo){
+    //console.log(ptitulo);
+    let tareas=JSON.parse( localStorage.getItem('tareas'));
+    for(let i=0; i<tareas.length;i++){
+        if(tareas[i].titulo==ptitulo){
+            tareas.splice(i,1);
+        }
+    }
+    localStorage.setItem('tareas',JSON.stringify(tareas));
+    getTasks();
+}
 
 //console.log(document.getElementById('formTask'))
 
